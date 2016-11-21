@@ -1,10 +1,30 @@
 require "kemal"
 require "json"
+require "jwt"
 require "./edi/order/order_file.cr"
 require "./edi/order/order_item.cr"
 
-post "/api/v1/orders" do |env|
+def authenticated?(env)
+  begin
+    authorization_header = env.request.headers["Authorization"]
+    token = authorization_header.split(' ').last
+    payload, header = JWT.decode(token, "secret", "HS256")
+    return true
+  rescue
+    return false
+  end
+end
+
+before_all do |env|
   env.response.content_type = "application/json"
+end
+
+post "/api/v1/orders" do |env|
+  # Authentication
+  unless authenticated? env
+    env.response.status_code = 401
+    next { status: 401 }.to_json.to_json
+  end
 
   order_file = Edi::Model::OrderFile.new
   order_file.id = env.params.json["id"].as(String).to_i64

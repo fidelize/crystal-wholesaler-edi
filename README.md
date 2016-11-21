@@ -1,6 +1,9 @@
 # Wholesaler EDI
 
-TODO: Write a description here
+Technologies:
+
+* [Kemal](https://github.com/sdogruyol/kemal): Rack-like web framework
+* [Crystal JWT](https://github.com/greyblake/crystal-jwt): Json Web Token authentication
 
 ## Installation
 

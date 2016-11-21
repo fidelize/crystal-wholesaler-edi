@@ -5,6 +5,9 @@ dependencies:
   kemal:
     github: sdogruyol/kemal
     branch: master
+  jwt:
+    github: greyblake/crystal-jwt
+    branch: master
 
 authors:
   - Alan Willms <dyulax@gmail.com>
