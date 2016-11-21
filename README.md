@@ -23,6 +23,13 @@ cd crystal-wholesaler-edi
 shards install
 ```
 
+Running:
+
+```bash
+crystal build --release src/edi.cr
+./edi
+```
+
 ## Usage
 
 TODO: Write usage instructions here
