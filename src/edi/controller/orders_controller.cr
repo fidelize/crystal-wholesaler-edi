@@ -13,6 +13,21 @@ module Edi
           return { status: 401 }.to_json.to_json
         end
 
+        order_file = new_order_file
+
+        if order_file.save
+          @env.response.status_code = 201
+          return {
+            name: order_file.file_path,
+            order: @env.params.json["order"].as(Hash)
+          }.to_json
+        end
+
+        @env.response.status_code = 409
+        { status: 409 }.to_json
+      end
+
+      private def new_order_file
         order_file = Edi::Model::OrderFile.new
         order_file.id = @env.params.json["id"].as(String).to_i64
         order_file.wholesaler = @env.params.json["wholesaler"].as(String)
@@ -29,25 +44,20 @@ module Edi
         order_file.markup = @env.params.json["order"].as(Hash)["markup"].as(String)
 
         @env.params.json["order"].as(Hash)["itens"].as(Hash).each do |key, item|
-          order_file.add_item Edi::Model::OrderItem.new(
-            item.as(Hash)["ean"].as(String),
-            item.as(Hash)["amount"].as(Int64),
-            item.as(Hash)["monitored"].as(Bool),
-            item.as(Hash)["discount"].as(Float64),
-            item.as(Hash)["net_price"].as(Float64)
-          )
+          order_file.add_item new_order_item(item)
         end
 
-        if order_file.save
-          @env.response.status_code = 201
-          return {
-            name: order_file.file_path,
-            order: @env.params.json["order"].as(Hash)
-          }.to_json
-        end
+        order_file
+      end
 
-        @env.response.status_code = 409
-        { status: 409 }.to_json
+      private def new_order_item(item)
+        Edi::Model::OrderItem.new(
+          item.as(Hash)["ean"].as(String),
+          item.as(Hash)["amount"].as(Int64),
+          item.as(Hash)["monitored"].as(Bool),
+          item.as(Hash)["discount"].as(Float64),
+          item.as(Hash)["net_price"].as(Float64)
+        )
       end
     end
   end
