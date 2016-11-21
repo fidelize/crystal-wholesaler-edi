@@ -1,8 +1,8 @@
 require "kemal"
 require "json"
 require "jwt"
-require "./edi/order/order_file.cr"
-require "./edi/order/order_item.cr"
+require "./edi/model/order_file.cr"
+require "./edi/model/order_item.cr"
 
 def authenticated?(env)
   begin
