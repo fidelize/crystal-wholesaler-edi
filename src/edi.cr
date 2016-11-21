@@ -1,5 +1,12 @@
+require "kemal"
 require "./edi/*"
 
-module Edi
-  # TODO Put your code here
+get "/api/v1/orders" do
+  "GET Hello World!"
 end
+
+post "/api/v1/orders" do
+  "POST Hello World!"
+end
+
+Kemal.run
