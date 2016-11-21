@@ -1,0 +1,12 @@
+name: edi
+version: 0.1.0
+
+dependencies:
+  kemal:
+    github: sdogruyol/kemal
+    branch: master
+
+authors:
+  - Alan Willms <dyulax@gmail.com>
+
+license: MIT
