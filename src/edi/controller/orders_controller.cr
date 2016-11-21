@@ -19,7 +19,7 @@ module Edi
           @env.response.status_code = 201
           return {
             name: order_file.file_path,
-            order: @env.params.json["order"].as(Hash)
+            order: json_param("order").as(Hash)
           }.to_json
         end
 
@@ -29,21 +29,21 @@ module Edi
 
       private def new_order_file
         order_file = Edi::Model::OrderFile.new
-        order_file.id = @env.params.json["id"].as(String).to_i64
-        order_file.wholesaler = @env.params.json["wholesaler"].as(String)
-        order_file.industry = @env.params.json["industry"].as(String)
-        order_file.layout = @env.params.json["layout"].as(String)
+        order_file.id = json_param("id").to_s.to_i64
+        order_file.wholesaler = json_param("wholesaler").to_s
+        order_file.industry = json_param("industry").to_s
+        order_file.layout = json_param("layout").to_s
 
-        order_file.project_code = @env.params.json["order"].as(Hash)["project_code"].as(String)
-        order_file.pos_code = @env.params.json["order"].as(Hash)["pos_code"].as(String)
-        order_file.email = @env.params.json["order"].as(Hash)["email"].as(String)
-        order_file.wholesaler_code = @env.params.json["order"].as(Hash)["wholesaler_code"].as(String)
-        order_file.term = @env.params.json["order"].as(Hash)["term"].as(String)
-        order_file.condition_code = @env.params.json["order"].as(Hash)["condition_code"].as(String)
-        order_file.order_client = @env.params.json["order"].as(Hash)["order_client"].as(String)
-        order_file.markup = @env.params.json["order"].as(Hash)["markup"].as(String)
+        order_file.project_code = json_param("order").as(Hash)["project_code"].to_s
+        order_file.pos_code = json_param("order").as(Hash)["pos_code"].to_s
+        order_file.email = json_param("order").as(Hash)["email"].to_s
+        order_file.wholesaler_code = json_param("order").as(Hash)["wholesaler_code"].to_s
+        order_file.term = json_param("order").as(Hash)["term"].to_s
+        order_file.condition_code = json_param("order").as(Hash)["condition_code"].to_s
+        order_file.order_client = json_param("order").as(Hash)["order_client"].to_s
+        order_file.markup = json_param("order").as(Hash)["markup"].to_s
 
-        @env.params.json["order"].as(Hash)["itens"].as(Hash).each do |key, item|
+        json_param("order").as(Hash)["itens"].as(Hash).each do |key, item|
           order_file.add_item new_order_item(item)
         end
 
@@ -52,7 +52,7 @@ module Edi
 
       private def new_order_item(item)
         Edi::Model::OrderItem.new(
-          item.as(Hash)["ean"].as(String),
+          item.as(Hash)["ean"].to_s,
           item.as(Hash)["amount"].as(Int64),
           item.as(Hash)["monitored"].as(Bool),
           item.as(Hash)["discount"].as(Float64),

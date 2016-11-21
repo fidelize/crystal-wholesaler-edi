@@ -17,6 +17,10 @@ module Edi
           return false
         end
       end
+
+      protected def json_param(name : String)
+        @env.params.json[name]
+      end
     end
   end
 end
