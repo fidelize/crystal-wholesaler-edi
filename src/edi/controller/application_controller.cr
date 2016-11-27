@@ -11,7 +11,8 @@ module Edi
         begin
           authorization_header = @env.request.headers["Authorization"]
           token = authorization_header.split(' ').last
-          payload, header = JWT.decode(token, "secret", "HS256")
+          secret = Edi::Config.secret
+          payload, header = JWT.decode(token, secret, "HS256")
           return true
         rescue
           return false

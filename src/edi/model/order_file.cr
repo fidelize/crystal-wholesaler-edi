@@ -1,3 +1,4 @@
+require "secure_random"
 require "./order_item.cr"
 
 module Edi
@@ -19,7 +20,12 @@ module Edi
 
       property itens : Array(Edi::Model::OrderItem)
 
-      def initialize
+      getter directory : String
+
+      @file_name : String?
+
+      def initialize(directory)
+        @directory = directory.chomp '/'
         @itens = [] of Edi::Model::OrderItem
       end
 
@@ -34,11 +40,11 @@ module Edi
       end
 
       def file_path
-        "files/#{file_name}"
+        "#{directory}/#{file_name}"
       end
 
       private def file_name
-        [
+        @file_name ||= [
           "PEDIDO",
           id.to_s.rjust(10, '0'),
           wholesaler_code.to_s.rjust(14, '0'),

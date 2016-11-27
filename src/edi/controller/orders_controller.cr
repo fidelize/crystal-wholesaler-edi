@@ -28,7 +28,7 @@ module Edi
       end
 
       private def new_order_file
-        order_file = Edi::Model::OrderFile.new
+        order_file = Edi::Model::OrderFile.new(Edi::Config.directory)
         order_file.id = json_param("id").to_s.to_i64
         order_file.wholesaler = json_param("wholesaler").to_s
         order_file.industry = json_param("industry").to_s
@@ -43,7 +43,7 @@ module Edi
         order_file.order_client = json_param("order").as(Hash)["order_client"].to_s
         order_file.markup = json_param("order").as(Hash)["markup"].to_s
 
-        json_param("order").as(Hash)["itens"].as(Hash).each do |key, item|
+        json_param("order").as(Hash)["itens"].as(Array).each do |item|
           order_file.add_item new_order_item(item)
         end
 
@@ -53,10 +53,10 @@ module Edi
       private def new_order_item(item)
         Edi::Model::OrderItem.new(
           item.as(Hash)["ean"].to_s,
-          item.as(Hash)["amount"].as(Int64),
+          item.as(Hash)["amount"].to_s.to_i64,
           item.as(Hash)["monitored"].as(Bool),
-          item.as(Hash)["discount"].as(Float64),
-          item.as(Hash)["net_price"].as(Float64)
+          item.as(Hash)["discount"].to_s.to_f64,
+          item.as(Hash)["net_price"].to_s.to_f64
         )
       end
     end

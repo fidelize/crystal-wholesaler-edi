@@ -16,7 +16,7 @@ brew install crystal-lang
 
 # Debian / Ubuntu
 curl http://dist.crystal-lang.org/apt/setup.sh | sudo bash
-sudo apt-get install crystal
+sudo apt install crystal
 ```
 
 Install dependencies:
@@ -26,20 +26,18 @@ cd crystal-wholesaler-edi
 shards install
 ```
 
-Running:
+## Usage
 
 ```bash
 crystal build --release src/edi.cr
 ./edi
 ```
 
-## Usage
+## Tests
 
-TODO: Write usage instructions here
-
-## Development
-
-TODO: Write development instructions here
+```bash
+crystal spec
+```
 
 ## Contributing
 
