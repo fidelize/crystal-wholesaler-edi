@@ -1,8 +1,8 @@
 version: 1.0
 shards:
   jwt:
-    github: greyblake/crystal-jwt
-    commit: 13d976aa5d2e20cdc67a866c4a4eb3c6af3c3a75
+    git: https://github.com/alanwillms/crystal-jwt.git
+    commit: c6e018d836c74010e868d674184528374bca2340
 
   kemal:
     github: sdogruyol/kemal

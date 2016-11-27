@@ -6,8 +6,8 @@ dependencies:
     github: sdogruyol/kemal
     branch: master
   jwt:
-    github: greyblake/crystal-jwt
-    branch: master
+    git: https://github.com/alanwillms/crystal-jwt.git
+    branch: fix-for-crystal-0-20
 
 authors:
   - Alan Willms <dyulax@gmail.com>
