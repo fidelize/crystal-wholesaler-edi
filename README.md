@@ -1,5 +1,7 @@
 # Wholesaler EDI
 
+[![Build Status](https://travis-ci.org/Fidelize/crystal-wholesaler-edi.svg?branch=master)](https://travis-ci.org/Fidelize/crystal-wholesaler-edi)
+
 Technologies:
 
 * [Kemal](https://github.com/sdogruyol/kemal): Rack-like web framework
