@@ -30,7 +30,7 @@ shards install
 
 ```bash
 crystal build --release src/edi.cr
-./edi
+./edi start
 ```
 
 ## Tests
